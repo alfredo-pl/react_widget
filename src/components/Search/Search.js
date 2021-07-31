@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 const Search = () => {
-    const [term, setTerm] = useState('');
-  
+    const [term, setTerm] = useState('programming');
+    const [results, setResults] = useState([]);
+    
     useEffect(()=>{
         
         const searchwiki = async () =>{
-             await axios.get("https://en.wikipedia.org/w/api.php",{
+            const { data } = await axios.get("https://en.wikipedia.org/w/api.php",{
                 params:{
                     action: 'query',
                     list:'search',
@@ -15,12 +16,14 @@ const Search = () => {
                     format: 'json',
                     srsearch: term
                 },
-                
-             });
+            });
+            setResults(data.query.search);
         }
-
         searchwiki();
-    },[term]);
+        
+    }, [term]);
+    
+    
     
     return (
         <div>
@@ -35,6 +38,7 @@ const Search = () => {
                 </div>
 
             </div>
+           
         </div> 
     );
 }
