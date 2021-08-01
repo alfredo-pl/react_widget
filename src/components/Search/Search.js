@@ -19,8 +19,15 @@ const Search = () => {
             });
             setResults(data.query.search);
         }
-        searchwiki();
-        
+
+        const timeoutId = setTimeout(() => {
+            
+            if(term){
+                searchwiki();
+            }
+            
+        }, 500);
+
     }, [term]);
     
     const renderedResults = results.map((result) => {
