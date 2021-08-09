@@ -20,13 +20,22 @@ const Search = () => {
             setResults(data.query.search);
         }
 
-        const timeoutId = setTimeout(() => {
-            
-            if(term){
-                searchwiki();
+        if(term && !results.length){
+            searchwiki();
+        }else{
+            const timeoutId = setTimeout(() => {
+                
+                if(term){
+                    searchwiki();
+                }
+                
+            }, 1000);
+    
+            return () =>{
+                clearTimeout(timeoutId)
             }
-            
-        }, 500);
+
+        }
 
     }, [term]);
     
