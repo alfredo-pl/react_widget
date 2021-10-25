@@ -3,6 +3,8 @@ import Accordion from './Accordion/Accordion';
 import Search from './Search/Search';
 import Dropdown from './Dropdown/Dropdown'
 import Translate from './Translate/Translate';
+import Header from './Header/Header';
+import Route from './Header/Route';
 
 const items = [
     {
@@ -32,25 +34,28 @@ const options= [
         value: 'green'
     }
 ]
-export default ()=> {
-
+export default () => {
     const [selected, setSelected] = useState(options[0]);
-    const [showDropdown, setShowDropdown] = useState(true)
     return (
         <div>
-            <button onClick={()=>setShowDropdown(!showDropdown)}>Toggle Dropdown</button>
-            <br/>
-            {/* <Accordion items={items}/> */}
-           {/*  <Search/> */}
-           { showDropdown ? (
-           <Dropdown 
-            label="Select at Color"
-            selected={selected} 
-            onSelectedChange={setSelected}
-            options={options}/> ) : null
-        }
-        <hr/>
-        <Translate/>
+            <Header/>
+            <Route path="/">
+                <Accordion items={items}/>
+            </Route>
+            <Route path="/list">
+                <Search/>
+            </Route>
+            <Route path="/dropdown">
+                <Dropdown 
+                items={items}
+                options={options}
+                selected={selected}
+                onSelectedChange={setSelected}
+                />
+            </Route>
+            <Route path="/">
+                <Translate/>
+            </Route>
         </div>
     )
 };
